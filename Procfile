@@ -1,1 +1,1 @@
-web: java -jar target/investiment-0.0.1-SNAPSHOT.jar
+web: java -jar build/libs/investiment-0.0.1-SNAPSHOT.jar
