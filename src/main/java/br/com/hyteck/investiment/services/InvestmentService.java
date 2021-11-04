@@ -45,4 +45,23 @@ public class InvestmentService extends AbstractService<Investment, UUID, Investm
         xslxs.forEach(xslx -> investments.add(new Investment(UUID.randomUUID(),xslx.getCode(), new BigDecimal(Double.toString(xslx.getValue())).setScale(5, RoundingMode.FLOOR), xslx.getQuantity(),xslx.getDate(), InvestmentType.VARIABLE_RENT, walletIndexedByName.get(xslx.getFinancial()))));
         return investments;
     }
+
+    public Map<String, BigDecimal> getAverage(){
+        var investments = getRepository().findAll();
+        var investmentsByname = investments.stream().collect(Collectors.groupingBy(Investment::getName));
+        var averageByName = new HashMap<String, BigDecimal>();
+        for(var invests: investmentsByname.entrySet()){
+            var quantity = BigDecimal.ZERO;
+            var value = BigDecimal.ZERO;
+            for(var investmet : invests.getValue()){
+                value = value.add(investmet.getTotal());
+                quantity = quantity.add(BigDecimal.valueOf(investmet.getQuantity()));
+
+            }
+            averageByName.put(invests.getKey(), value.divide(quantity, RoundingMode.HALF_UP));
+
+        }
+        return averageByName;
+    }
+
 }

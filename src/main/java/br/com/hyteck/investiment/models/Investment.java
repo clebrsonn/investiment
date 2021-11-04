@@ -23,6 +23,7 @@ public class Investment extends AbstractEntity {
     private LocalDate date;
     @Enumerated(EnumType.STRING)
     private InvestmentType type;
+    private BigDecimal total;
 
     @ManyToOne
     @JoinColumn(name = "wallet")
@@ -36,6 +37,7 @@ public class Investment extends AbstractEntity {
         this.date = date;
         this.type = type;
         this.wallet = wallet;
+        //calculateTotal();
     }
 
     @Override
@@ -44,6 +46,11 @@ public class Investment extends AbstractEntity {
         if (o == null || getClass() != o.getClass()) return false;
         Investment that = (Investment) o;
         return name.equals(that.name) && valueBuy.equals(that.valueBuy) && quantity.equals(that.quantity) && date.equals(that.date) && wallet.equals(that.wallet);
+    }
+    @PrePersist
+    @PreUpdate
+    private void calculateTotal() {
+        this.total = BigDecimal.valueOf(getQuantity()).multiply(getValueBuy());
     }
 
     @Override
