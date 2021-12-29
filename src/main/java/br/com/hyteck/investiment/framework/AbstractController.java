@@ -10,7 +10,7 @@ import java.util.Collection;
 import java.util.Optional;
 
 @AllArgsConstructor
-public class AbstractController<Entity, Id, Service extends AbstractService<Entity, Id, ?>>{
+public class AbstractController<Entity, Id, Service extends AbstractService<Entity, Id>>{
     private Service service;
 
     @GetMapping

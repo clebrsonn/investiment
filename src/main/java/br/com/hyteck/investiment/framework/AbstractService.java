@@ -8,10 +8,10 @@ import java.util.Objects;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
-public abstract class AbstractService<Entity, Id, Repository extends JpaRepository<Entity, Id>> {
-    private final Repository repository;
+public abstract class AbstractService<Entity, Id> {
+    private final JpaRepository<Entity, Id> repository;
 
-    protected AbstractService(Repository repository) {
+    protected AbstractService(JpaRepository<Entity, Id> repository) {
         this.repository = repository;
     }
 
@@ -43,7 +43,7 @@ public abstract class AbstractService<Entity, Id, Repository extends JpaReposito
         repository.delete(entity);
     }
 
-    public Repository getRepository(){
+    public JpaRepository<Entity, Id> getRepository(){
         return this.repository;
     }
 }
