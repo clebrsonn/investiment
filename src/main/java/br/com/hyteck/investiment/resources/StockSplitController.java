@@ -16,7 +16,7 @@ import java.util.UUID;
 
 @RestController
 @RequestMapping("/split")
-public class StockSplitController extends AbstractController<StockSplit, UUID, StockSplitService> {
+public class StockSplitController extends AbstractController<StockSplit, String, StockSplitService> {
 
 
     public StockSplitController(StockSplitService service) {

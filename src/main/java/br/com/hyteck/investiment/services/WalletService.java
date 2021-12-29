@@ -3,6 +3,7 @@ package br.com.hyteck.investiment.services;
 import br.com.hyteck.investiment.framework.AbstractService;
 import br.com.hyteck.investiment.models.Wallet;
 import br.com.hyteck.investiment.repository.WalletRepository;
+import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Service;
 
 import java.util.Collection;
@@ -10,18 +11,19 @@ import java.util.Set;
 import java.util.UUID;
 import java.util.stream.Collectors;
 @Service
-public class WalletService extends AbstractService<Wallet, UUID, WalletRepository> {
+public class WalletService extends AbstractService<Wallet, String> {
     protected WalletService(WalletRepository repository) {
         super(repository);
     }
     @Override
     public Wallet validateSave(Wallet wallet) {
-
         return wallet;
     }
 
-
-
+    @Override
+    public WalletRepository getRepository() {
+        return (WalletRepository) super.getRepository();
+    }
 
     public Collection<Wallet> findOrSaveAllByNames(Set<String> names){
         var wallets = getRepository().findDistinctByNameIn(names);

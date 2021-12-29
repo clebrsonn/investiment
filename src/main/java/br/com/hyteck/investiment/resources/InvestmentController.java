@@ -14,7 +14,7 @@ import java.util.UUID;
 
 @RestController
 @RequestMapping("/investment/")
-public class InvestmentController extends AbstractController<Investment, UUID, InvestmentService> {
+public class InvestmentController extends AbstractController<Investment, String, InvestmentService> {
 
 
     public InvestmentController(InvestmentService service) {

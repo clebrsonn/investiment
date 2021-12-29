@@ -15,27 +15,27 @@ import java.util.UUID;
 @RequiredArgsConstructor
 @AllArgsConstructor
 @Entity
-@Table(uniqueConstraints = { @UniqueConstraint(columnNames = { "date", "quantity", "valueBuy", "name", "wallet" }) })
+@Table(uniqueConstraints = { @UniqueConstraint(columnNames = { "date", "quantity", "valueBuy", "stock", "wallet" }) })
 public class Investment extends AbstractEntity {
-    private String name;
+    @ManyToOne
+    @JoinColumn(name="stock")
+    private Stock stock;
     private BigDecimal valueBuy;
     private Double quantity;
     private LocalDate date;
-    @Enumerated(EnumType.STRING)
-    private InvestmentType type;
+
     private BigDecimal total;
 
     @ManyToOne
     @JoinColumn(name = "wallet")
     private Wallet wallet;
 
-    public Investment(UUID id, String name, BigDecimal valueBuy, Double quantity, LocalDate date, InvestmentType type, Wallet wallet) {
-        super(id);
-        this.name = name;
+    public Investment(UUID id, Stock stock, BigDecimal valueBuy, Double quantity, LocalDate date, InvestmentType type, Wallet wallet) {
+        super(id.toString());
+        this.stock=stock;
         this.valueBuy = valueBuy;
         this.quantity = quantity;
         this.date = date;
-        this.type = type;
         this.wallet = wallet;
         //calculateTotal();
     }
@@ -45,7 +45,7 @@ public class Investment extends AbstractEntity {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Investment that = (Investment) o;
-        return name.equals(that.name) && valueBuy.equals(that.valueBuy) && quantity.equals(that.quantity) && date.equals(that.date) && wallet.equals(that.wallet);
+        return stock.equals(that.stock) && valueBuy.equals(that.valueBuy) && quantity.equals(that.quantity) && date.equals(that.date) && wallet.equals(that.wallet);
     }
     @PrePersist
     @PreUpdate
@@ -55,6 +55,6 @@ public class Investment extends AbstractEntity {
 
     @Override
     public int hashCode() {
-        return Objects.hash(name, valueBuy, quantity, date, wallet);
+        return Objects.hash(stock, valueBuy, quantity, date, wallet);
     }
 }

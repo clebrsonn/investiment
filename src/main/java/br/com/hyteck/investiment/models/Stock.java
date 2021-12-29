@@ -4,37 +4,33 @@ import br.com.hyteck.investiment.framework.AbstractEntity;
 import lombok.*;
 import org.hibernate.Hibernate;
 
-import javax.persistence.Entity;
+import javax.persistence.*;
 import java.util.Objects;
-import java.util.UUID;
 
+@Entity
 @Getter
 @Setter
 @ToString
 @AllArgsConstructor
-@Entity
-public class Wallet extends AbstractEntity {
+@NoArgsConstructor
+public class Stock extends AbstractEntity {
     private String name;
 
-    public Wallet(UUID uuid, String name) {
-        super.id= uuid.toString();
-        this.name=name;
-    }
-
-    public Wallet() {
-
-    }
+    @Column(unique = true)
+    private String code;
+    @Enumerated(EnumType.STRING)
+    private InvestmentType type;
 
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || Hibernate.getClass(this) != Hibernate.getClass(o)) return false;
-        Wallet wallet = (Wallet) o;
-        return id != null && Objects.equals(id, wallet.id);
+        Stock stock = (Stock) o;
+        return id != null && Objects.equals(id, stock.id);
     }
 
     @Override
     public int hashCode() {
-        return 0;
+        return getClass().hashCode();
     }
 }

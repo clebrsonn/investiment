@@ -25,15 +25,12 @@ public class StockSplit extends AbstractEntity {
     private BigDecimal from;
     private String name;
 
-    @ManyToMany
-    @JoinTable(name = "stock_split_investments",
-            joinColumns = @JoinColumn(name = "stock_split_id"),
-            inverseJoinColumns = @JoinColumn(name = "investments_id"))
-    private List<Investment> investments;
+    @ManyToOne
+    private Stock stock;
 
-    public StockSplit(UUID id, List<Investment> investments, LocalDate date, BigDecimal to, BigDecimal from) {
-        super(id);
-        this.investments = investments;
+    public StockSplit(UUID id, Stock stock, LocalDate date, BigDecimal to, BigDecimal from) {
+        super(id.toString());
+        this.stock = stock;
         this.date = date;
         this.to = to;
         this.from = from;

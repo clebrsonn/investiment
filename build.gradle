@@ -1,5 +1,5 @@
 plugins {
-    id 'org.springframework.boot' version '2.5.7-SNAPSHOT'
+    id 'org.springframework.boot' version '2.6.1'
     id 'io.spring.dependency-management' version '1.0.11.RELEASE'
     id 'java'
 }
@@ -16,14 +16,13 @@ configurations {
 
 repositories {
     mavenCentral()
-    maven { url 'https://repo.spring.io/milestone' }
-    maven { url 'https://repo.spring.io/snapshot' }
 }
 
 dependencies {
     implementation 'org.apache.poi:poi:5.0.0'
     implementation 'org.apache.poi:poi-ooxml:5.0.0'
-    implementation 'org.springdoc:springdoc-openapi-ui:1.5.11'
+    implementation 'org.springdoc:springdoc-openapi-ui:1.5.12'
+    implementation 'org.springframework.cloud:spring-cloud-starter-openfeign:3.1.0'
 
     implementation 'org.springframework.boot:spring-boot-starter-batch'
     implementation 'org.springframework.boot:spring-boot-starter-data-jpa'

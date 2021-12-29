@@ -69,7 +69,7 @@ public class UploadEventListener {
                         , row.getCell(5).getStringCellValue()
                         , row.getCell(6).getNumericCellValue()
                         , row.getCell(7).getNumericCellValue());
-                xslx.setId(UUID.randomUUID());
+                xslx.setId(UUID.randomUUID().toString());
                 xslxes.add(xslx);
 
             });

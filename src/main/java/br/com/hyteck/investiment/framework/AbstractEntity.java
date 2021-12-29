@@ -7,14 +7,20 @@ import lombok.Setter;
 
 import javax.persistence.Id;
 import javax.persistence.MappedSuperclass;
+import javax.persistence.PrePersist;
 import java.util.UUID;
 
 @MappedSuperclass
 @Getter
 @Setter
 @AllArgsConstructor
-@NoArgsConstructor
 public class AbstractEntity {
     @Id
-    protected UUID id;
+    protected String id;
+
+    public AbstractEntity(){
+        if(getId()== null){
+            setId(UUID.randomUUID().toString());
+        }
+    }
 }

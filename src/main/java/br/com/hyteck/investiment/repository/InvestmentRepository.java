@@ -10,8 +10,10 @@ import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 
-public interface InvestmentRepository extends JpaRepository<Investment, UUID> {
-    Optional<Investment> findByNameAndQuantityAndValueBuyAndDateAndWalletId(String name, Double quantity
-            , BigDecimal valueBuy, LocalDate date, UUID walletId);
-    Collection<Investment> findAllByNameAndDateLessThanEqual(String name, LocalDate date);
+public interface InvestmentRepository extends JpaRepository<Investment, String> {
+    Optional<Investment> findByStockNameAndQuantityAndValueBuyAndDateAndWalletId(String name, Double quantity
+            , BigDecimal valueBuy, LocalDate date, String walletId);
+
+
+    Collection<Investment> findAllByStockNameAndDateLessThanEqual(String name, LocalDate date);
 }
