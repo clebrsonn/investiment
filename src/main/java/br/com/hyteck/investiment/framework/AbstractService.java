@@ -23,14 +23,14 @@ public abstract class AbstractService<Entity, Id> {
         return repository.findAll();
     }
 
-    public List<Entity> saveAll(List<Entity> entities) {
+    public List<Entity> saveAll(Collection<Entity> entities) {
         entities = entities.parallelStream().map(this::validateSave).filter(Objects::nonNull).collect(Collectors.toList());
         return repository.saveAll(entities);
     }
 
     public Entity save(Entity entity) {
         entity = validateSave(entity);
-        return repository.save(entity);
+        return repository.saveAndFlush(entity);
     }
 
     public abstract Entity validateSave(Entity entity);

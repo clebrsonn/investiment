@@ -15,7 +15,7 @@ import java.util.UUID;
 import java.util.stream.Stream;
 
 @Service
-public class ImportData implements StorageService{
+public class StorageData implements StorageService{
 
     private final Path root = Paths.get("uploads");
 

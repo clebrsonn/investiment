@@ -1,7 +1,10 @@
 package br.com.hyteck.investiment.events;
 
+import br.com.hyteck.investiment.models.ImportedXSLX;
 import lombok.Getter;
 import org.springframework.context.ApplicationEvent;
+
+import java.util.List;
 
 @Getter
 public class UploadEvent extends ApplicationEvent {
@@ -14,10 +17,11 @@ public class UploadEvent extends ApplicationEvent {
     }
     @Getter
     public static class ImportFinish extends ApplicationEvent{
+        private final List<ImportedXSLX> xslxes;
 
-        public ImportFinish(Object source) {
+        public ImportFinish(Object source, List<ImportedXSLX> xslxes) {
             super(source);
-
+            this.xslxes = xslxes;
         }
     }
 }

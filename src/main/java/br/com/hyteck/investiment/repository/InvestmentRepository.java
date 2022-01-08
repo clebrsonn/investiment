@@ -6,14 +6,12 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.util.Collection;
-import java.util.List;
 import java.util.Optional;
-import java.util.UUID;
 
 public interface InvestmentRepository extends JpaRepository<Investment, String> {
-    Optional<Investment> findByStockNameAndQuantityAndValueBuyAndDateAndWalletId(String name, Double quantity
-            , BigDecimal valueBuy, LocalDate date, String walletId);
+    Optional<Investment> findByStockNameAndQuantityAndValueAndDateAndWalletId(String name, Double quantity
+            , BigDecimal value, LocalDate date, String walletId);
 
 
-    Collection<Investment> findAllByStockNameAndDateLessThanEqual(String name, LocalDate date);
+    Collection<Investment> findAllByStockCodeAndDateLessThanEqual(String name, LocalDate date);
 }

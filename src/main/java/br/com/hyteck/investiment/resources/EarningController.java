@@ -1,7 +1,6 @@
 package br.com.hyteck.investiment.resources;
 
-import br.com.hyteck.investiment.apis.external.ConnectAlphaVantage;
-import org.springframework.beans.factory.annotation.Autowired;
+import br.com.hyteck.investiment.stocks.api.external.ConnectAlphaVantage;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;

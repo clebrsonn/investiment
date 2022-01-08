@@ -1,10 +1,12 @@
 package br.com.hyteck.investiment.services;
 
+import br.com.hyteck.investiment.enums.InvestmentType;
+import br.com.hyteck.investiment.enums.OperationType;
 import br.com.hyteck.investiment.framework.AbstractService;
 import br.com.hyteck.investiment.models.*;
 import br.com.hyteck.investiment.repository.ImportRepository;
 import br.com.hyteck.investiment.repository.InvestmentRepository;
-import br.com.hyteck.investiment.repository.WalletRepository;
+import br.com.hyteck.investiment.stocks.models.Stock;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -34,25 +36,43 @@ public class InvestmentService extends AbstractService<Investment, String> {
 
     @Override
     public Investment validateSave(Investment investment) {
-        var investmentSaved = getRepository().findByStockNameAndQuantityAndValueBuyAndDateAndWalletId(investment.getStock().getName(),
-                investment.getQuantity(), investment.getValueBuy(), investment.getDate(), investment.getWallet().getId());
+        var investmentSaved = getRepository().findByStockNameAndQuantityAndValueAndDateAndWalletId(investment.getStock().getName(),
+                investment.getQuantity(), investment.getValue(), investment.getDate(), investment.getWallet().getId());
         if(investmentSaved.isPresent()){
             return null;
         }
         return investment;
     }
 
-    public List<Investment> from(){
-        List<ImportedXSLX> xslxs = importRepository.findAll();
-        var financialNames = xslxs.stream().map(ImportedXSLX::getFinancial).collect(Collectors.toSet());
-        var walletIndexedByName = walletService.findOrSaveAllByNames(financialNames).stream().collect(Collectors.toMap(Wallet::getName, wallet -> wallet));
-        var stockToSave = xslxs.parallelStream().map(importedXSLX -> new Stock(importedXSLX.getCode(), importedXSLX.getCode(), InvestmentType.VARIABLE_RENT)).collect(Collectors.toList());
-        stockToSave = stockService.saveAll(stockToSave);
-        Map<String, Stock> stockIndexedByCode = stockToSave.stream().collect(Collectors.toMap(Stock::getCode, stock -> stock));
-        var investments = new ArrayList<Investment>();
+    public void convertAndSave(){
+        List<ImportedXSLX> xslxs = importRepository.findAllByAlreadyConvertedIsFalse();
+        List<String> stockCodes   = new ArrayList<>();
+        Set<String> walletsNames = new HashSet<>();
 
-        xslxs.forEach(xslx -> investments.add(new Investment(UUID.randomUUID(),stockIndexedByCode.get(xslx.getCode()), new BigDecimal(Double.toString(xslx.getValue())).setScale(5, RoundingMode.FLOOR), xslx.getQuantity(),xslx.getDate(), InvestmentType.VARIABLE_RENT, walletIndexedByName.get(xslx.getFinancial()))));
-        return investments;
+        xslxs.forEach(importedXSLX -> {
+            stockCodes.add(importedXSLX.getCode());
+            walletsNames.add(importedXSLX.getFinancial());
+
+        });
+
+        var investments = new ArrayList<Investment>();
+        var walletIndexedByName = walletService.findOrSaveAllByNames(walletsNames).stream().collect(Collectors.toMap(Wallet::getName, wallet -> wallet));
+        var stockIndexedByCode = stockService.findByCodeIn(stockCodes).stream().collect(Collectors.toMap(Stock::getCode, stock-> stock));
+
+
+        xslxs.forEach(xslx -> {
+            investments.add(new Investment(UUID.randomUUID(),stockIndexedByCode.get(xslx.getCode()),
+                new BigDecimal(Double.toString(xslx.getValue())).setScale(5, RoundingMode.FLOOR), xslx.getQuantity(),xslx.getDate(), InvestmentType.VARIABLE_RENT, walletIndexedByName.get(xslx.getFinancial()),
+                OperationType.getByType(xslx.getTypeOperation())
+
+            ));
+            xslx.setAlreadyConverted(true);
+
+        });
+
+        saveAll(investments.stream().distinct().collect(Collectors.toList()));
+        importRepository.saveAllAndFlush(xslxs);
+
     }
 
     public Map<String, BigDecimal> getAverage(){
@@ -73,4 +93,9 @@ public class InvestmentService extends AbstractService<Investment, String> {
         return averageByName;
     }
 
+    public Double getTotalAmount() {
+        var buy = getRepository().findAll().stream().filter(investment -> investment.getOperationType().equals(OperationType.BUY)).mapToDouble(in -> in.getTotal().doubleValue()).sum();
+        var sell = getRepository().findAll().stream().filter(investment -> investment.getOperationType().equals(OperationType.SELL)).mapToDouble(in -> in.getTotal().doubleValue()).sum();
+       return buy - sell;
+    }
 }

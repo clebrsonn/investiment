@@ -1,4 +1,4 @@
-package br.com.hyteck.investiment.models;
+package br.com.hyteck.investiment.enums;
 
 
 public enum InvestmentType {

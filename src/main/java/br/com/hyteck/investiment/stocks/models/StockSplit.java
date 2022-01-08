@@ -1,7 +1,6 @@
-package br.com.hyteck.investiment.models;
+package br.com.hyteck.investiment.stocks.models;
 
 import br.com.hyteck.investiment.framework.AbstractEntity;
-import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -9,7 +8,6 @@ import lombok.Setter;
 import javax.persistence.*;
 import java.math.BigDecimal;
 import java.time.LocalDate;
-import java.util.List;
 import java.util.UUID;
 
 @Entity
