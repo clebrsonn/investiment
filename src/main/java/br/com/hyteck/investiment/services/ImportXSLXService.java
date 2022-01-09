@@ -26,8 +26,7 @@ public class ImportXSLXService {
     @Autowired
     private ApplicationEventPublisher applicationEventPublisher;
 
-    @SneakyThrows
-    public void importXLSToDatabase(String path){
+    public void importXLSToDatabase(String path) {
         List<ImportedXSLX> xslxes = new ArrayList<>();
         try{
             XSSFWorkbook wb = new XSSFWorkbook(path);
@@ -47,9 +46,14 @@ public class ImportXSLXService {
             importRepository.saveAll(xslxes);
             wb.close();
         } catch (IOException e) {
+            e.printStackTrace();
             throw new RuntimeException("error", e.getCause());
         }finally {
-            Files.deleteIfExists(Path.of(path));
+            try {
+                Files.deleteIfExists(Path.of(path));
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
             applicationEventPublisher.publishEvent(new UploadEvent.ImportFinish(this, xslxes));
 
         }

@@ -1,4 +1,4 @@
-package br.com.hyteck.investiment.models;
+package br.com.hyteck.investiment.trade.model;
 
 import lombok.Getter;
 import lombok.Setter;

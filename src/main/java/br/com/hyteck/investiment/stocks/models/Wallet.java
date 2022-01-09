@@ -1,10 +1,13 @@
-package br.com.hyteck.investiment.models;
+package br.com.hyteck.investiment.stocks.models;
 
 import br.com.hyteck.investiment.framework.AbstractEntity;
+import br.com.hyteck.investiment.users.User;
 import lombok.*;
 import org.hibernate.Hibernate;
 
 import javax.persistence.Entity;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import java.util.Objects;
 import java.util.UUID;
 
@@ -15,6 +18,9 @@ import java.util.UUID;
 @Entity
 public class Wallet extends AbstractEntity {
     private String name;
+    @ManyToOne
+    @JoinColumn(name = "user_id")
+    private User user;
 
     public Wallet(UUID uuid, String name) {
         super.id= uuid.toString();

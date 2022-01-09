@@ -2,7 +2,7 @@ package br.com.hyteck.investiment.services;
 
 import br.com.hyteck.investiment.events.ConvertedObjectsEvent;
 import br.com.hyteck.investiment.framework.AbstractService;
-import br.com.hyteck.investiment.models.Wallet;
+import br.com.hyteck.investiment.stocks.models.Wallet;
 import br.com.hyteck.investiment.repository.WalletRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationEventPublisher;

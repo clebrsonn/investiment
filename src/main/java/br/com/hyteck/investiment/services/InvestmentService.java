@@ -7,6 +7,8 @@ import br.com.hyteck.investiment.models.*;
 import br.com.hyteck.investiment.repository.ImportRepository;
 import br.com.hyteck.investiment.repository.InvestmentRepository;
 import br.com.hyteck.investiment.stocks.models.Stock;
+import br.com.hyteck.investiment.stocks.models.Wallet;
+import br.com.hyteck.investiment.trade.model.Investment;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

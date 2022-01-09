@@ -4,6 +4,8 @@ import br.com.hyteck.investiment.framework.AbstractEntity;
 import lombok.*;
 
 import javax.persistence.Entity;
+import javax.validation.constraints.DecimalMin;
+import javax.validation.constraints.Digits;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Past;
 import java.time.LocalDate;
@@ -22,9 +24,11 @@ public class ImportedXSLX extends AbstractEntity {
     private String financial;
     @NotBlank
     private String code;
-    @NotBlank
+    @DecimalMin("0.0")
+   // @Digits(integer = 20, fraction = 2)
     private double quantity;
-    @NotBlank
+    @DecimalMin("0.0")
+   // @Digits(integer = 20, fraction = 2)
     private double value;
     private Boolean alreadyConverted = false;
 

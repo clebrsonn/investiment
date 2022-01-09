@@ -37,7 +37,7 @@ public class StockService extends AbstractService<Stock, String>{
 
             wait.addAndGet(1);
             try {
-                Thread.sleep(10000);
+                Thread.sleep(100);
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }

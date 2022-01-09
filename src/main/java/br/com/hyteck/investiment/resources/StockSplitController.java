@@ -8,7 +8,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @RequestMapping("/split")
-public class StockSplitController extends AbstractController<StockSplit, String, StockSplitService> {
+public class StockSplitController extends AbstractController<StockSplit, String> {
 
 
     public StockSplitController(StockSplitService service) {

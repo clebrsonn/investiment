@@ -1,6 +1,6 @@
 package br.com.hyteck.investiment.repository;
 
-import br.com.hyteck.investiment.models.Investment;
+import br.com.hyteck.investiment.trade.model.Investment;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.math.BigDecimal;

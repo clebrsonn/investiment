@@ -1,8 +1,9 @@
-package br.com.hyteck.investiment.models;
+package br.com.hyteck.investiment.trade.model;
 
 import br.com.hyteck.investiment.enums.InvestmentType;
 import br.com.hyteck.investiment.enums.OperationType;
 import br.com.hyteck.investiment.framework.AbstractEntity;
+import br.com.hyteck.investiment.stocks.models.Wallet;
 import br.com.hyteck.investiment.stocks.models.Stock;
 import lombok.*;
 import org.springframework.format.annotation.DateTimeFormat;
@@ -37,7 +38,7 @@ public class Investment extends AbstractEntity {
 
     @NotNull
     @DecimalMin("0.0")
-    @Digits(integer = 20, fraction = 2)
+    //@Digits(integer = 20, fraction = 2)
     private BigDecimal total;
 
     @ManyToOne

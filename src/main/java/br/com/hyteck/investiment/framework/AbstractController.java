@@ -10,8 +10,8 @@ import java.util.Collection;
 import java.util.Optional;
 
 @AllArgsConstructor
-public class AbstractController<Entity, Id, Service extends AbstractService<Entity, Id>>{
-    private Service service;
+public abstract class AbstractController<Entity, Id>{
+    private AbstractService<Entity, Id> service;
 
     @GetMapping
     protected ResponseEntity<Collection<Entity>> getAll(){
@@ -48,8 +48,8 @@ public class AbstractController<Entity, Id, Service extends AbstractService<Enti
         return ResponseEntity.noContent().build();
     }
 
-    protected Service getService(){
-        return service;
-    }
+    protected AbstractService<Entity, Id> getService(){
+        return this.service;
+    };
 
 }

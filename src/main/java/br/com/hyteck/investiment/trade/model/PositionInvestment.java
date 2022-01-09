@@ -1,4 +1,4 @@
-package br.com.hyteck.investiment.models;
+package br.com.hyteck.investiment.trade.model;
 
 import br.com.hyteck.investiment.framework.AbstractEntity;
 import br.com.hyteck.investiment.stocks.models.Stock;

@@ -6,7 +6,6 @@ import lombok.NoArgsConstructor;
 
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
-import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -26,7 +25,6 @@ public class CurrencyDTO {
     }
 
     public static Collection<Currency> toCurrencies(List<Valute> valutes){
-        List<Currency> currencies = new ArrayList<>();
         return valutes.stream().map(currencyDTO -> new Currency(currencyDTO.getCharCode(), currencyDTO.getName(), false)).collect(Collectors.toList());
 
     }
