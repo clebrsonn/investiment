@@ -17,7 +17,7 @@ public class DividendService extends AbstractService<Dividend, String> {
     private ConnectAlphaVantage connectAlphaVantage;
 
     @Autowired
-    private InvestmentService investmentService;
+    private StockService stockService;
 
     public DividendService(JpaRepository<Dividend, String> repository) {
         super(repository);
@@ -34,12 +34,12 @@ public class DividendService extends AbstractService<Dividend, String> {
     }
 
     public void findDividends(){
-        var investments = investmentService.findAll();
-        List<String> divdends = new ArrayList<>();
+        var investments = stockService.findAll();
+        List<String> dividends = new ArrayList<>();
 
         investments.forEach(investment -> {
-            connectAlphaVantage.getEarningCalendarBySymbol(investment.getStock().getCode());
+           dividends.add(connectAlphaVantage.getEarningCalendarBySymbol(investment.getCodeIntegration()));
         });
-
+        dividends.forEach(System.out::println);
     }
 }

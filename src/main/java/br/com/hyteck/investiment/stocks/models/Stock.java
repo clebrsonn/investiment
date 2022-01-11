@@ -21,6 +21,8 @@ public class Stock extends AbstractEntity {
     @NotBlank
     private String code;
 
+    private String codeIntegration;
+
     private String type;
 
     @Override
@@ -31,10 +33,11 @@ public class Stock extends AbstractEntity {
         return id != null && Objects.equals(id, stock.id);
     }
 
-    public Stock(String name, String code, String type){
+    public Stock(String name, String code, String type, String codeIntegration){
         this.name = name;
         setCode(code);
         this.type = type;
+        this.codeIntegration=codeIntegration;
     }
 
     public void setCode(String code) {

@@ -56,10 +56,10 @@ public class StockService extends AbstractService<Stock, String>{
         List<Stock> st = new ArrayList<>();
         for (String key: Objects.requireNonNull(stocks).keySet()) {
             if(stocks.get(key).isEmpty()){
-                st.add(new Stock(code, code, "Missing Information"));
+                st.add(new Stock(code, code, "Missing Information", code));
             }
             for (Map<String, String> values : stocks.get(key)) {
-                st.add(new Stock(values.get("2. name"), values.get("1. symbol"), values.get("3. type")));
+                st.add(new Stock(values.get("2. name"), values.get("1. symbol"), values.get("3. type"), values.get("1. symbol")));
             }
         }
         return st;

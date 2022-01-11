@@ -12,6 +12,5 @@ public interface InvestmentRepository extends JpaRepository<Investment, String> 
     Optional<Investment> findByStockNameAndQuantityAndValueAndDateAndWalletId(String name, Double quantity
             , BigDecimal value, LocalDate date, String walletId);
 
-
     Collection<Investment> findAllByStockCodeAndDateLessThanEqual(String name, LocalDate date);
 }
