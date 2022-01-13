@@ -98,8 +98,8 @@ public class ExceptionHandlerController extends ResponseEntityExceptionHandler {
      *
      */
     public class Error {
-        private String messageDeveloper;
-        private String messageUser;
+        private final String messageDeveloper;
+        private final String messageUser;
 
 
         Error(String messageDeveloper, String messageUser) {

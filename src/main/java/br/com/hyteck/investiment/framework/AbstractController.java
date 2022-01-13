@@ -50,6 +50,6 @@ public abstract class AbstractController<Entity, Id>{
 
     protected AbstractService<Entity, Id> getService(){
         return this.service;
-    };
+    }
 
 }
