@@ -17,6 +17,7 @@ public abstract class AbstractController<Entity, Id>{
     protected ResponseEntity<Collection<Entity>> getAll(){
         return ResponseEntity.ok(service.findAll());
     }
+
     @GetMapping("/{id}")
     protected ResponseEntity<Entity> findById(@PathVariable Id id) {
         Optional<Entity> entity = service.findById(id);

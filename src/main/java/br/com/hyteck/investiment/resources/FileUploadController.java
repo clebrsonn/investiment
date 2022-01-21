@@ -22,23 +22,21 @@ import java.util.stream.Collectors;
 public class FileUploadController {
 
     private final StorageService storageService;
-    @Autowired
-    private ApplicationEventPublisher applicationEventPublisher;
+    private final ApplicationEventPublisher applicationEventPublisher;
 
 
     @Autowired
-    public FileUploadController(StorageService storageService) {
+    public FileUploadController(StorageService storageService, ApplicationEventPublisher applicationEventPublisher) {
         this.storageService = storageService;
+        this.applicationEventPublisher = applicationEventPublisher;
     }
 
-    @GetMapping("/")
+    @GetMapping()
     public List<String> listUploadedFiles() {
-
         return storageService.loadAll().map(
                         path -> MvcUriComponentsBuilder.fromMethodName(FileUploadController.class,
                                 "serveFile", path.getFileName().toString()).build().toUri().toString())
                 .collect(Collectors.toList());
-
     }
 
     @GetMapping("{filename:.+}")
@@ -50,7 +48,7 @@ public class FileUploadController {
                 "attachment; filename=\"" + file.getFilename() + "\"").body(file);
     }
 
-    @PostMapping(value = "/", consumes = {MediaType.MULTIPART_FORM_DATA_VALUE })
+    @PostMapping(value = "", consumes = {MediaType.MULTIPART_FORM_DATA_VALUE })
     public ResponseEntity handleFileUpload(@RequestParam("file") MultipartFile file,
                                    RedirectAttributes redirectAttributes) {
         Path path = storageService.store(file);

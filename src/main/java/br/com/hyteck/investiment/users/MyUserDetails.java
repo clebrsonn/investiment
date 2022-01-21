@@ -21,6 +21,10 @@ public class MyUserDetails implements UserDetails {
                 .collect(Collectors.toList());
     }
 
+    public User getUser() {
+        return user;
+    }
+
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
         return authorities;
